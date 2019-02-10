@@ -58,10 +58,14 @@ public class DeliveryRoute {
     public Date getClosedAt() {
         return this.closedAt;
     }
+    
+    public List<DeliveryOrder> getDeliveryOrders() {
+		return deliveryOrders;
+	}
 
     // Methods
 
-    public ArrayList<Geolocation> getOptimizedRoute() {
+	public ArrayList<Geolocation> getOptimizedRoute() {
         // TO DO : Calcula melhor rota entre as deliveryOrders;
         // TO DO : Retorna uma ArrayList no qual o index representa a posição do ponto na rota
         // OBS1  : O restaurante sempre será o ponto zero;
@@ -76,7 +80,10 @@ public class DeliveryRoute {
     }
 
     public void addDeliveryPoint(DeliveryOrder deliveryOrder) {
-        if (deliveryOrder.getId()   == this.store.getId() && this.deliveryOrders.size() <= 4) {
+    	if(this.deliveryOrders == null)
+    		this.deliveryOrders = new ArrayList<>();
+
+        if (deliveryOrder.getStore().getId() == this.store.getId() && this.deliveryOrders.size() <= 4) {
             this.deliveryOrders.add(deliveryOrder);
         } else {
             throw new RuntimeException();

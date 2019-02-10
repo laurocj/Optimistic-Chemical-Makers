@@ -36,7 +36,7 @@ public class DeliveryOrderController {
     // -----------------------------------------------------------------------------------------------------------------
 
     @CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
-    @PostMapping(value = "order/create")
+    @PostMapping(value = "/order/create")
     public ResponseEntity<?> createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrder) {
         return ResponseEntity.ok(
         		deliveryOrderFactory

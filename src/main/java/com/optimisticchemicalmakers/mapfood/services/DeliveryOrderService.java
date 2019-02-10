@@ -2,6 +2,8 @@ package com.optimisticchemicalmakers.mapfood.services;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,33 +24,38 @@ public class DeliveryOrderService {
 
     @Autowired
     private DeliveryOrderRepository deliveryOrderRepository;
+    
+    @Resource(name = "requestScopedDeliveryRouteBean")
+    DeliveryRouteService deliveryRouteService;
 
     // Service Methods
 
     public DeliveryOrder createDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
         
     	Long estimatedPreparationTime = 600000L; // 10 min
-    	Long kmTimeTraveled = 12000L; // 2 min
+    	Long kmTimeTraveled = 120000L; // 2 min
     	
-    	DeliveryOrder deliveryOrder = deliveryOrderFactory.getInstance(deliveryOrderDto);
+    	DeliveryOrder newDeliveryOrder = deliveryOrderFactory.getInstance(deliveryOrderDto);
 
     	Store store = storeService.getStore(deliveryOrderDto.getStoreHash());
-   	    deliveryOrder.setStore(store);
+    	newDeliveryOrder.setStore(store);
 
-    	Double distance = store.distanceTo(deliveryOrder.getLatitude(), deliveryOrder.getLongitude());
+    	Double distance = store.distanceTo(newDeliveryOrder.getLatitude(), newDeliveryOrder.getLongitude());
     	
-    	deliveryOrder.start();
+    	newDeliveryOrder.start();
     	
     	Date estimatedTime = new Date();
-    	
-    	
-    	estimatedTime.setTime((long) (deliveryOrder.getCreatedAt().getTime() + (distance * kmTimeTraveled) + estimatedPreparationTime));
-    	deliveryOrder.setEstimatedDeliveryTime(estimatedTime);
+    	estimatedTime.setTime((long) (newDeliveryOrder.getCreatedAt().getTime() + (distance * kmTimeTraveled) + estimatedPreparationTime));
+    	newDeliveryOrder.setEstimatedDeliveryTime(estimatedTime);
     	deliveryOrderDto.setEstimatedDevliveryTime(estimatedTime);
 
-        deliveryOrder = deliveryOrderRepository.save(deliveryOrder);
+    	newDeliveryOrder = deliveryOrderRepository.save(newDeliveryOrder);
 
         storeService.save(store);
-        return deliveryOrder;
+        
+        deliveryRouteService.addOrder(newDeliveryOrder);
+        
+        
+        return newDeliveryOrder;
     }
 }
