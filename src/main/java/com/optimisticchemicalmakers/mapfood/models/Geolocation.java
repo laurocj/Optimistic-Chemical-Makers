@@ -1,8 +1,10 @@
-package com.OptimisticChemicalMakers.MapFood.models;
+package com.optimisticchemicalmakers.mapfood.models;
 
 import javax.persistence.Embeddable;
+import javax.persistence.MappedSuperclass;
 
 @Embeddable
+@MappedSuperclass
 public class Geolocation {
 
     // Static Properties
@@ -11,17 +13,16 @@ public class Geolocation {
 
     // Class Properties
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
 
     // Constructors
-
     public Geolocation() {
-
     }
 
-    public Geolocation(double latitude, double longitude) {
+    
+    public Geolocation(Double latitude, Double longitude) {
 
         if (latitude < -90 || latitude > 90) {
             throw new NullPointerException("Latitude values must be between -90 and 90!");
@@ -55,38 +56,37 @@ public class Geolocation {
 
     // Get Methods
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
     // Set Methods
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public void setPosition(double latitude, double longitude) {
+    public void setPosition(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
+  
     // Class Methods
 
-    public double distanceTo(Geolocation geographicPosition) {
-
-        return this.haversinDistance(this.latitude, this.longitude, geographicPosition.getLatitude(), geographicPosition.getLongitude());
-
+    public double distanceTo(Double latitude, Double longitude) {
+        return this.distanceTo(new Geolocation(latitude, longitude));
     }
 
-
-
-
+    @SuppressWarnings("static-access")
+	public double distanceTo(Geolocation geolocation) {
+        return this.haversinDistance(this.latitude, this.longitude, geolocation.getLatitude(), geolocation.getLongitude());
+    }
 }
