@@ -51,7 +51,7 @@ public class DeliveryOrderController {
         		);
     }
 
-    @PostMapping
+    @PostMapping(value = "/order/ready")
     public ResponseEntity<DeliveryRouteDto> signDeliveryOrderReadyToDeliveryBoy(
             @RequestBody DeliveryOrderDto deliveryOrderDto) {
 
@@ -59,7 +59,7 @@ public class DeliveryOrderController {
 
     }
 
-}
+
 
 
 
