@@ -13,7 +13,7 @@ public class DeliveryBoyService {
     @Autowired
     DeliveryBoyRepository deliveryBoyRepository;
 
-    public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Long radius) {
+    public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius) {
         return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius);
     }
 
@@ -21,7 +21,7 @@ public class DeliveryBoyService {
 
         DeliveryBoy deliveryBoy = null;
 
-        Long radius = 1L;
+        Double radius = 1D;
 
         while (deliveryBoy == null) {
 

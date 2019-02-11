@@ -23,7 +23,7 @@ public class DeliveryBoyController {
     public List<DeliveryBoy> getDistance(
             @RequestParam("latitude") Double latitude,
             @RequestParam("longitude") Double longitude,
-            @RequestParam("radius") Long radius) {
+            @RequestParam("radius") Double radius) {
 
         return deliveryBoyService.getNearestDeliveryBoys(latitude, longitude, radius);
 
@@ -33,11 +33,14 @@ public class DeliveryBoyController {
     // Return the nearest DeliveryBoy
     @GetMapping(value = "deliveryboy/nearest")
     public ResponseEntity<?> getDistance(
-            @RequestParam("latitude") double latitude,
-            @RequestParam("longitude") double longitude) {
+            @RequestParam("latitude") Double latitude,
+            @RequestParam("longitude") Double longitude) {
 
         return ResponseEntity.ok(deliveryBoyService.getNearestDeliveryBoy(latitude, longitude));
 
     }
+
+
+
 
 }

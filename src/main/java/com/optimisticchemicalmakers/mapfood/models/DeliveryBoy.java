@@ -20,6 +20,9 @@ public class DeliveryBoy {
 
     // Constructors
 
+    public DeliveryBoy(){
+    }
+
     public DeliveryBoy(Long latitude, Long longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

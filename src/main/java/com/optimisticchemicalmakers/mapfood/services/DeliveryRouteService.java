@@ -1,20 +1,14 @@
 package com.optimisticchemicalmakers.mapfood.services;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.optimisticchemicalmakers.mapfood.models.DeliveryBoy;
+import com.optimisticchemicalmakers.mapfood.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.optimisticchemicalmakers.mapfood.bean.WaitingOrders;
-import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
-import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
-import com.optimisticchemicalmakers.mapfood.models.Store;
 import com.optimisticchemicalmakers.mapfood.repositories.DeliveryRouterRepository;
 
 @Service
@@ -88,6 +82,51 @@ public class DeliveryRouteService {
         waitingOrders.setMap(map);
                 
         return deliveryRoute;
+	}
+
+	// Get Optimized Delivery Route
+	public List<Geolocation> getOptimizedDeliveryRoute(DeliveryRoute deliveryRoute) {
+
+		DeliveryOrder nextDeliveryOrder = null;
+
+		List<DeliveryOrder> deliveryOrders = new ArrayList<>(deliveryRoute.getDeliveryOrders());
+
+		List<Geolocation> optimizedRoute = new ArrayList<>();
+
+		optimizedRoute.add(deliveryRoute.getStore());
+
+		while (deliveryOrders.size() > 0) {
+
+			for (int i = 0; i < deliveryOrders.size(); i++) {
+
+				if (nextDeliveryOrder == null) {
+
+					nextDeliveryOrder = deliveryOrders.get(i);
+
+				} else {
+
+					if ( nextDeliveryOrder.distanceTo(deliveryRoute.getStore()) > deliveryOrders.get(i).distanceTo(deliveryRoute.getStore())) {
+						nextDeliveryOrder = deliveryOrders.get(i);
+					}
+
+					deliveryOrders.get(i).distanceTo(deliveryRoute.getStore());
+
+					nextDeliveryOrder.distanceTo(deliveryRoute.getStore());
+
+				}
+
+			}
+
+			optimizedRoute.add(nextDeliveryOrder);
+
+			deliveryOrders.remove(nextDeliveryOrder);
+
+			nextDeliveryOrder = null;
+
+		}
+
+		return optimizedRoute;
+
 	}
 
 	public List<DeliveryRoute> getDeliveryRouteByStore(String hash_store) {
