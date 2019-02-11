@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `delivery_boy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1001,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(254) DEFAULT NULL,
   `hash` varchar(65) DEFAULT NULL,
   `store_hash` varchar(65) DEFAULT NULL,
@@ -38,12 +38,11 @@ CREATE TABLE IF NOT EXISTS `delivery_item` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `delivery_order_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_Product_item` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `store` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1001,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `hash` varchar(65) DEFAULT NULL,
   `name` varchar(254) DEFAULT NULL,
   `city` varchar(254) DEFAULT NULL,
