@@ -31,7 +31,7 @@ public class DeliveryBoyController {
 
     // GET /deliveryboy/nearest
     // Return the nearest DeliveryBoy
-    @GetMapping(value = "deliveryboy/nearest")
+    @GetMapping(value = "/deliveryboy/nearest")
     public ResponseEntity<?> getDistance(
             @RequestParam("latitude") Double latitude,
             @RequestParam("longitude") Double longitude) {

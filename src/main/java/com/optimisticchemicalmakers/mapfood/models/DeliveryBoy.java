@@ -14,18 +14,17 @@ public class DeliveryBoy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long latitude;
+    private Double latitude;
 
-    private Long longitude;
+    private Double longitude;
 
     // Constructors
+    
+    public DeliveryBoy() {}
 
-    public DeliveryBoy(){
-    }
-
-    public DeliveryBoy(Long latitude, Long longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public DeliveryBoy(Double latitude, Double longitude) {
+        this.setLatitude(latitude);
+        this.setLongitude(longitude);
     }
 
     // Getters
@@ -34,23 +33,23 @@ public class DeliveryBoy {
         return this.id;
     }
 
-    public Long getLatitude() {
-        return this.latitude;
-    }
+	public Double getLatitude() {
+		return latitude;
+	}
 
-    public Long getLongitude() {
-        return this.longitude;
-    }
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
 
-    // Setters
+	public Double getLongitude() {
+		return longitude;
+	}
 
-    public void setLatitude(Long latitude) {
-        this.latitude = latitude;
-    }
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 
-    public void setLongitude(Long longitude) {
-        this.longitude = longitude;
-    }
+
 
 }
 

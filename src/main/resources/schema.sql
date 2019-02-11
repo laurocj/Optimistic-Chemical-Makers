@@ -63,8 +63,7 @@ CREATE TABLE IF NOT EXISTS `delivery_order` (
   `latitude` varchar(45) DEFAULT NULL,
   `longitude` varchar(45) DEFAULT NULL,
   `delivery_route_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_Customer_Order` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `delivery_route` (
@@ -75,8 +74,7 @@ CREATE TABLE IF NOT EXISTS `delivery_route` (
   `started_at` datetime DEFAULT NULL,
   `delivery_boy` bigint(20) DEFAULT NULL,
   `store_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK_Store_route` FOREIGN KEY (`store_id`) REFERENCES `store` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 

@@ -21,7 +21,8 @@ public class DeliveryBoyService {
 
         DeliveryBoy deliveryBoy = null;
 
-        Double radius = 1D;
+
+        Double radius = 1.0;
 
         while (deliveryBoy == null) {
 
