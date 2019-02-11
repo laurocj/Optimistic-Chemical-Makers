@@ -2,8 +2,6 @@ package com.optimisticchemicalmakers.mapfood.services;
 
 import java.util.Date;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +21,9 @@ public class DeliveryOrderService {
     private DeliveryOrderFactory deliveryOrderFactory;
 
     @Autowired
-    private DeliveryOrderRepository deliveryOrderRepository;
-    
-    @Resource(name = "requestScopedDeliveryRouteBean")
-    DeliveryRouteService deliveryRouteService;
+    private DeliveryOrderRepository deliveryOrderRepository;    
+    @Autowired
+    private DeliveryRouteService deliveryRouteService;
 
     // Service Methods
 

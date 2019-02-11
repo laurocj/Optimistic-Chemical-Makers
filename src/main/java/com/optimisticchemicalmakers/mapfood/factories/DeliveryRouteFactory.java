@@ -23,6 +23,8 @@ public class DeliveryRouteFactory {
     	DeliveryRouteDto deliveryRouteDto = new DeliveryRouteDto();
     	deliveryRouteDto.setClosedAt(deliveryRoute.getClosedAt());
     	
+    	deliveryRouteDto.setStoreHash(deliveryRoute.getStore().getHash());
+    	
     	List<DeliveryOrderDto> deliveryOrderDtos = StreamSupport
     			.stream(deliveryRoute.getDeliveryOrders().spliterator(), false)
                 .map(deliveryOrderFactory::getInstance)

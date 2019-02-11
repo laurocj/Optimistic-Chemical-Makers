@@ -9,10 +9,13 @@ import org.springframework.web.context.annotation.ApplicationScope;
 
 import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
 
+@Component
 public class WaitingOrders {
 
 	public Map<Date, DeliveryRoute> map;
 	
+	@Bean
+	@ApplicationScope
 	public WaitingOrders getWaitingOrders() {
 		return new WaitingOrders();
 	}

@@ -7,7 +7,7 @@ public class DeliveryRouteDto {
 	
 	private List<DeliveryOrderDto> deliveryOrders;
 
-    private StoreDto store;
+	private String storeHash;
     
     private DeliveryBoyDto deliveryBoy;
 
@@ -17,8 +17,8 @@ public class DeliveryRouteDto {
 		return deliveryOrders;
 	}
 
-	public StoreDto getStore() {
-		return store;
+	public String getStoreHash() {
+		return storeHash;
 	}
 
 	public DeliveryBoyDto getDeliveryBoy() {
@@ -33,8 +33,8 @@ public class DeliveryRouteDto {
 		this.deliveryOrders = deliveryOrders;
 	}
 
-	public void setStore(StoreDto store) {
-		this.store = store;
+	public void setStoreHash(String storeHash) {
+		this.storeHash = storeHash;
 	}
 
 	public void setDeliveryBoy(DeliveryBoyDto deliveryBoy) {

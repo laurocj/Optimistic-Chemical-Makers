@@ -3,8 +3,10 @@ package com.optimisticchemicalmakers.mapfood.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,9 @@ public class DeliveryRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false)
+    private String hash = UUID.randomUUID().toString().replace("-", "");
 
     @OneToMany(mappedBy="deliveryRoute", cascade = CascadeType.ALL)
     private List<DeliveryOrder> deliveryOrders;
@@ -34,7 +39,7 @@ public class DeliveryRoute {
     private DeliveryBoy deliveryBoy;
 
     private Date closedAt;
-
+   
     // Constructors
     
     public DeliveryRoute() {}
@@ -43,8 +48,14 @@ public class DeliveryRoute {
         this.store = store;
     }
 
+    // Gets
+    
 	public Long getId() {
 		return id;
+	}
+	
+	public String getHash() {
+		return hash;
 	}
 
 	public List<DeliveryOrder> getDeliveryOrders() {
@@ -62,6 +73,8 @@ public class DeliveryRoute {
 	public Date getClosedAt() {
 		return closedAt;
 	}
+
+	// Sets 
 
 	public void setDeliveryOrders(List<DeliveryOrder> deliveryOrders) {
 		this.deliveryOrders = deliveryOrders;
@@ -98,12 +111,12 @@ public class DeliveryRoute {
     public void addDeliveryPoint(DeliveryOrder deliveryOrder) {
     	if(this.deliveryOrders == null)
     		this.deliveryOrders = new ArrayList<>();
-
-//        if (deliveryOrder.getStore().getId() == this.store.getId() && this.deliveryOrders.size() <= 4) {
+    	
+        if (Long.compare(deliveryOrder.getStore().getId(),this.store.getId()) == 0 && this.deliveryOrders.size() <= 4) {
             this.deliveryOrders.add(deliveryOrder);
-//        } else {
-//            throw new RuntimeException();
-//        }
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     public void closeDeliveryRoute() {

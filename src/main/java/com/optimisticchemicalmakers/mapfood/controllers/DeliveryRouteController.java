@@ -22,8 +22,8 @@ public class DeliveryRouteController {
     // Service
     // -----------------------------------------------------------------------------------------------------------------
 
-//    @Autowired
-//    private DeliveryRouteService deliveryRouteService;
+    @Autowired
+    private DeliveryRouteService deliveryRouteService;
 
     // -----------------------------------------------------------------------------------------------------------------
     // Factories
@@ -37,14 +37,14 @@ public class DeliveryRouteController {
     // Creia uma ordem
     // -----------------------------------------------------------------------------------------------------------------
 
-//    @CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
-//    @GetMapping(value = "/routes/{hash_store}")
-//    public List<DeliveryRouteDto> listDeliveryRoute(@PathVariable String hash_store) {
-//        return deliveryRouteService
-//        		.getDeliveryRouteByStore(hash_store)
-//        		.stream()
-//        		.map(deliveryRouteFactory::getInstance)
-//        		.collect(Collectors.toList());
-//    }
+    @CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
+    @GetMapping(value = "/routes/{hash_store}")
+    public List<DeliveryRouteDto> listDeliveryRouteByStore(@PathVariable String hash_store) {
+        return deliveryRouteService
+        		.getDeliveryRouteByStore(hash_store)
+        		.stream()
+        		.map(deliveryRouteFactory::getInstance)
+        		.collect(Collectors.toList());
+    }
 
 }

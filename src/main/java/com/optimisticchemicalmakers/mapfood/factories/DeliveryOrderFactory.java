@@ -17,7 +17,7 @@ import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
 public class DeliveryOrderFactory {
 
     @Autowired
-    DeliveryItemFactory deliveryItemFactory;
+    public DeliveryItemFactory deliveryItemFactory;
 
     public DeliveryOrder getInstance(DeliveryOrderDto deliveryOrderDto) {
 
