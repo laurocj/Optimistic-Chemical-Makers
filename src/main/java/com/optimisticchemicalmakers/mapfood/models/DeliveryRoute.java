@@ -125,4 +125,15 @@ public class DeliveryRoute {
 
     }
 
+	public Boolean isReadyToDelivery() {
+
+		for (DeliveryOrder deliveryOrder: this.getDeliveryOrders()) {
+			if (!deliveryOrder.isReayToDelivery()) {
+				return false;
+			}
+		}
+		return true;
+
+	}
+
 }

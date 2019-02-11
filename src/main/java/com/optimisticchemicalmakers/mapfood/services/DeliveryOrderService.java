@@ -2,6 +2,7 @@ package com.optimisticchemicalmakers.mapfood.services;
 
 import java.util.Date;
 
+import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,4 +57,33 @@ public class DeliveryOrderService {
        
         return newDeliveryOrder;
     }
+
+
+    public DeliveryRoute signAsReadyToDelivery(DeliveryOrderDto deliveryOrderDto) {
+
+        DeliveryOrder deliveryOrder = this.getDeliveryOrder(deliveryOrderDto);
+
+        deliveryOrder.setAsReadyToDelivery();
+
+        deliveryOrderRepository.save(deliveryOrder);
+
+        DeliveryRoute deliveryRoute =  deliveryRouteService.getDeliveryRoute(deliveryOrder);
+
+        if(deliveryRoute.isReadyToDelivery()) {
+            return this.deliveryRouteService.assignDeliveryBoy(deliveryRoute);
+        } else {
+            return deliveryRoute;
+        }
+
+    }
+
+    public DeliveryOrder getDeliveryOrder(Long id) {
+        return deliveryOrderRepository.findById(id).get();
+    }
+
+    public DeliveryOrder getDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
+        return this.getDeliveryOrder(deliveryOrderDto.getId());
+    }
+
+
 }

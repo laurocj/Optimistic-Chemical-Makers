@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.optimisticchemicalmakers.mapfood.models.DeliveryBoy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class DeliveryRouteService {
 	
 	@Autowired
 	public StoreService storeService;
+
+	@Autowired
+	public DeliveryBoyService deliveryBoyService;
 	
 	@Resource(name = "getWaitingOrders")
 	WaitingOrders waitingOrders;
@@ -90,5 +94,26 @@ public class DeliveryRouteService {
 		Store store = storeService.getStore(hash_store);
 		return deliveryRouterRepository.findByStore(store);
 	}
+
+	public DeliveryRoute getDeliveryRoute(DeliveryOrder deliveryOrder) {
+		return this.getDeliveryRoute(deliveryOrder.getId());
+	}
+
+	public DeliveryRoute getDeliveryRoute(Long id) {
+		return deliveryRouterRepository.findById(id).get();
+	}
+
+	public DeliveryRoute assignDeliveryBoy(DeliveryRoute deliverRoute, DeliveryBoy deliveryBoy) {
+		deliverRoute.setDeliveryBoy(deliveryBoy);
+		return deliveryRouterRepository.save(deliverRoute);
+	}
+
+	public DeliveryRoute assignDeliveryBoy(DeliveryRoute deliveryRoute) {
+		return this.assignDeliveryBoy(deliveryRoute, deliveryBoyService.getNearestDeliveryBoy(
+				deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude()));
+	}
+
+
+
 
 }

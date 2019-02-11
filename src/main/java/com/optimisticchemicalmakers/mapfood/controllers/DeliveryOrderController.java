@@ -1,5 +1,7 @@
 package com.optimisticchemicalmakers.mapfood.controllers;
 
+import com.optimisticchemicalmakers.mapfood.dtos.DeliveryRouteDto;
+import com.optimisticchemicalmakers.mapfood.factories.DeliveryRouteFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,6 +31,9 @@ public class DeliveryOrderController {
 
     @Autowired
     private DeliveryOrderFactory deliveryOrderFactory;
+
+    @Autowired
+    private DeliveryRouteFactory deliveryRouteFactory;
     
     // -----------------------------------------------------------------------------------------------------------------
     // GET /v1/order/create
@@ -44,6 +49,14 @@ public class DeliveryOrderController {
         					.createDeliveryOrder(deliveryOrder)
         					)
         		);
+    }
+
+    @PostMapping
+    public ResponseEntity<DeliveryRouteDto> signDeliveryOrderReadyToDeliveryBoy(
+            @RequestBody DeliveryOrderDto deliveryOrderDto) {
+
+        return ResponseEntity.ok(deliveryRouteFactory.getInstance(deliveryOrderService.signAsReadyToDelivery(deliveryOrderDto)));
+
     }
 
 }

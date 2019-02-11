@@ -117,6 +117,14 @@ public class DeliveryOrder extends Geolocation {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	public void setAsReadyToDelivery() {
+		this.setPreparedAt(new Date());
+	}
+
+	public Boolean isReayToDelivery() {
+		return (this.preparedAt != null);
+	}
 	
 	public void start() {
 		this.createdAt = new Date();
