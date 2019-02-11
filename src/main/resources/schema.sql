@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `delivery_route` (
   `id` bigint(20) NOT NULL,
   `closed_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `protocol` varchar(255) NOT NULL,
+  `hash` varchar(255) NOT NULL,
   `started_at` datetime DEFAULT NULL,
   `delivery_boy` bigint(20) DEFAULT NULL,
   `store_id` bigint(20) NOT NULL

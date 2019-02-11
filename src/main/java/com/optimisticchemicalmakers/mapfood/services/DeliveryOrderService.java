@@ -51,11 +51,12 @@ public class DeliveryOrderService {
 
     	newDeliveryOrder = deliveryOrderRepository.save(newDeliveryOrder);
 
-        storeService.save(store);
+        store = storeService.save(store);
+        
+        newDeliveryOrder.setStore(store);
         
         deliveryRouteService.addOrder(newDeliveryOrder);
-        
-        
+       
         return newDeliveryOrder;
     }
 }

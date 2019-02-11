@@ -36,34 +36,50 @@ public class DeliveryRoute {
     private Date closedAt;
 
     // Constructors
+    
+    public DeliveryRoute() {}
 
     public DeliveryRoute(Store store) {
         this.store = store;
     }
 
-    // Getters
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public Store getStore() {
-        return this.store;
-    }
-
-    public DeliveryBoy getDeliveryBoy() {
-        return this.deliveryBoy;
-    }
-
-    public Date getClosedAt() {
-        return this.closedAt;
-    }
-    
-    public List<DeliveryOrder> getDeliveryOrders() {
+	public List<DeliveryOrder> getDeliveryOrders() {
 		return deliveryOrders;
 	}
 
-    // Methods
+	public Store getStore() {
+		return store;
+	}
+
+	public DeliveryBoy getDeliveryBoy() {
+		return deliveryBoy;
+	}
+
+	public Date getClosedAt() {
+		return closedAt;
+	}
+
+	public void setDeliveryOrders(List<DeliveryOrder> deliveryOrders) {
+		this.deliveryOrders = deliveryOrders;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
+	public void setDeliveryBoy(DeliveryBoy deliveryBoy) {
+		this.deliveryBoy = deliveryBoy;
+	}
+
+	public void setClosedAt(Date closedAt) {
+		this.closedAt = closedAt;
+	}
+	
+	// Methods
 
 	public ArrayList<Geolocation> getOptimizedRoute() {
         // TO DO : Calcula melhor rota entre as deliveryOrders;
@@ -83,11 +99,11 @@ public class DeliveryRoute {
     	if(this.deliveryOrders == null)
     		this.deliveryOrders = new ArrayList<>();
 
-        if (deliveryOrder.getStore().getId() == this.store.getId() && this.deliveryOrders.size() <= 4) {
+//        if (deliveryOrder.getStore().getId() == this.store.getId() && this.deliveryOrders.size() <= 4) {
             this.deliveryOrders.add(deliveryOrder);
-        } else {
-            throw new RuntimeException();
-        }
+//        } else {
+//            throw new RuntimeException();
+//        }
     }
 
     public void closeDeliveryRoute() {

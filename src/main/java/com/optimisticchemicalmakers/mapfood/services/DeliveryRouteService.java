@@ -1,21 +1,27 @@
 package com.optimisticchemicalmakers.mapfood.services;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.ApplicationScope;
 
 import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
+import com.optimisticchemicalmakers.mapfood.repositories.DeliveryRouterRepository;
 
-@Service
+@Component
 public class DeliveryRouteService {
-
-	public Map<Date, DeliveryRoute> map;
 	
+	@Autowired
+	public DeliveryRouterRepository deliveryRouterRepository;
+	
+	public Map<Date, DeliveryRoute> map;
+		
 	@Bean
 	@ApplicationScope
 	public DeliveryRouteService requestScopedDeliveryRouteBean() {
@@ -23,8 +29,11 @@ public class DeliveryRouteService {
 	}
 	
 	
-	public void addOrder(DeliveryOrder newDeliveryOrder) {
+	public DeliveryRoute addOrder(DeliveryOrder newDeliveryOrder) {
 				
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		
+		DeliveryRoute deliveryRoute;
 		if(map == null)
 			map = new HashMap<Date, DeliveryRoute>();
         
@@ -38,11 +47,10 @@ public class DeliveryRouteService {
         	
         	outerloop:
         	for (Date key : map.keySet()) {
-        		
+        		 
         		termEstimateMoreDelay.setTime(key.getTime() + delay);
         		
-        		if(	map.get(key).getStore().getId() == newDeliveryOrder.getStore().getId()
-        			&& termEstimateMoreDelay.after(newDeliveryOrder.getCreatedAt())
+        		if( termEstimateMoreDelay.after(newDeliveryOrder.getCreatedAt())
     				&& map.get(key).getDeliveryOrders().size() < 5) {
         			
         			for (DeliveryOrder orderAwaiting : map.get(key).getDeliveryOrders()) {
@@ -59,12 +67,20 @@ public class DeliveryRouteService {
         
         if(keyWhereToAdd == null) {
     		
-			DeliveryRoute deliveryRoute = new DeliveryRoute(newDeliveryOrder.getStore());
+			deliveryRoute = new DeliveryRoute(newDeliveryOrder.getStore());
         	deliveryRoute.addDeliveryPoint(newDeliveryOrder);
         	map.put(newDeliveryOrder.getCreatedAt(), deliveryRoute);
         	
 		} else {
 			map.get(keyWhereToAdd).addDeliveryPoint(newDeliveryOrder);
+			deliveryRoute = map.get(keyWhereToAdd);
 		}
+        
+        newDeliveryOrder.setDeliveryRoute(deliveryRoute);
+        
+        deliveryRouterRepository.save(deliveryRoute);
+                
+        return deliveryRoute;
 	}
+
 }

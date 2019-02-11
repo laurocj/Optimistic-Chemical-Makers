@@ -102,6 +102,10 @@ public class DeliveryOrder extends Geolocation {
 		this.estimatedDeliveryTime = estimatedDevliveryTime;
 	}
 
+	public void setDeliveryRoute(DeliveryRoute deliveryRoute) {
+		this.deliveryRoute = deliveryRoute;
+	}
+
 	public void setStore(Store store) {
 		this.store = store;
 	}
