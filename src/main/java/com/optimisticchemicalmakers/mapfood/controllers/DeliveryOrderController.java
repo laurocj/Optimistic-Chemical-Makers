@@ -1,17 +1,16 @@
 package com.optimisticchemicalmakers.mapfood.controllers;
 
-import com.optimisticchemicalmakers.mapfood.dtos.DeliveryRouteDto;
-import com.optimisticchemicalmakers.mapfood.factories.DeliveryRouteFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.optimisticchemicalmakers.mapfood.dtos.DeliveryOrderDto;
+import com.optimisticchemicalmakers.mapfood.dtos.DeliveryRouteDto;
 import com.optimisticchemicalmakers.mapfood.factories.DeliveryOrderFactory;
+import com.optimisticchemicalmakers.mapfood.factories.DeliveryRouteFactory;
 import com.optimisticchemicalmakers.mapfood.services.DeliveryOrderService;
 
 @RestController
@@ -39,8 +38,6 @@ public class DeliveryOrderController {
     // GET /v1/order/create
     // Creia uma ordem
     // -----------------------------------------------------------------------------------------------------------------
-
-    @CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
     @PostMapping(value = "/order/create")
     public ResponseEntity<?> createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrder) {
         return ResponseEntity.ok(
@@ -51,6 +48,10 @@ public class DeliveryOrderController {
         		);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // POST /v1/order/ready
+    // Sinaliza que uma ordem foi finalizada
+    // -----------------------------------------------------------------------------------------------------------------
     @PostMapping(value = "/order/ready")
     public ResponseEntity<DeliveryRouteDto> signDeliveryOrderReadyToDeliveryBoy(
             @RequestBody DeliveryOrderDto deliveryOrderDto) {

@@ -18,8 +18,10 @@ public class GeolocationController {
     @Autowired
     private GeolocationService geolocationService;
 
+    // -----------------------------------------------------------------------------------------------------------------
     // GET /distance
     // Return the distance between points
+    // -----------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/distance")
     public ResponseEntity<?> getDistance(
 

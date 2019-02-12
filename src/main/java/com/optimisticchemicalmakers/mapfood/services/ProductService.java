@@ -21,6 +21,9 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     
+    // -----------------------------------------------------------------------------------------------------------------
+    // Method - getByStoreHash
+    // -----------------------------------------------------------------------------------------------------------------
     public List<Product> getByStoreHash(String hash) {
     	Store store = new Store();
     	store.setHash(hash);

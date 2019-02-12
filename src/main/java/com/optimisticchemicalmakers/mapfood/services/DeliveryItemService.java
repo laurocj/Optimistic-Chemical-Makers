@@ -9,9 +9,16 @@ import com.optimisticchemicalmakers.mapfood.repositories.DeliveryItemRepository;
 @Service
 public class DeliveryItemService {
 	
+	// -----------------------------------------------------------------------------------------------------------------
+    // Repository
+    // -----------------------------------------------------------------------------------------------------------------
+	
 	@Autowired
     private DeliveryItemRepository deliveryItemRepository;
 
+	// -----------------------------------------------------------------------------------------------------------------
+    // Method - save
+    // -----------------------------------------------------------------------------------------------------------------
 	public DeliveryItem save(DeliveryItem deliveryItem) {
 		return deliveryItemRepository.save(deliveryItem);
 	}

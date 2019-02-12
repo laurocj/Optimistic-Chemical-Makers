@@ -28,6 +28,8 @@ public class DeliveryOrder extends Geolocation {
 	private Date preparedAt;
 
 	private Date estimatedDeliveryTime;
+	
+	private Integer classificationOnDelivery;
 
 	@ManyToOne
 	@JoinColumn(name = "store_id", nullable = false)
@@ -81,6 +83,10 @@ public class DeliveryOrder extends Geolocation {
 	public Customer getCustomer() {
 		return customer;
 	}
+	
+	public Integer getClassificationOnDelivery() {
+		return classificationOnDelivery;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -116,6 +122,10 @@ public class DeliveryOrder extends Geolocation {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public void setClassificationOnDelivery(Integer classificationOnDelivery) {
+		this.classificationOnDelivery = classificationOnDelivery;
 	}
 
 	public void setAsReadyToDelivery() {

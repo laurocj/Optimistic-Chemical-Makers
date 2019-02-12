@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.optimisticchemicalmakers.mapfood.dtos.StoreDto;
-import com.optimisticchemicalmakers.mapfood.factories.DeliveryOrderFactory;
-import com.optimisticchemicalmakers.mapfood.factories.ProductFactory;
 import com.optimisticchemicalmakers.mapfood.factories.StoreFactory;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
@@ -21,7 +19,7 @@ import com.optimisticchemicalmakers.mapfood.repositories.StoreRepository;
 public class StoreService {
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Repository (Manter apenas um Repository por service)
+    // Repository
     // -----------------------------------------------------------------------------------------------------------------
 
     @Autowired
@@ -33,19 +31,8 @@ public class StoreService {
     // -----------------------------------------------------------------------------------------------------------------
 
     @Autowired
-    private ProductFactory productFactory;
-
-    @Autowired
     private StoreFactory storeFactory;
-
-    @Autowired
-    private DeliveryOrderFactory deliveryOrderFactory;
-
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------------------------------------------------
-
+	
     // -----------------------------------------------------------------------------------------------------------------
     // Method - getStore
     // -----------------------------------------------------------------------------------------------------------------

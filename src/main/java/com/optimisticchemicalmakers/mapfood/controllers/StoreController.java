@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,8 +35,6 @@ public class StoreController {
     // GET /v1/stores/nearest
     // Busca por Stores disponíveis em uma região
     // -----------------------------------------------------------------------------------------------------------------
-
-	@CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
 	@GetMapping("/stores/nearest")
     public List<StoreDto> getNearestStores(
             @RequestParam("latitude") Double latitude,

@@ -1,6 +1,7 @@
 package com.optimisticchemicalmakers.mapfood.services;
 
 import com.optimisticchemicalmakers.mapfood.models.DeliveryBoy;
+import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
 import com.optimisticchemicalmakers.mapfood.repositories.DeliveryBoyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,39 @@ import java.util.List;
 @Service
 public class DeliveryBoyService {
 
-    @Autowired
-    DeliveryBoyRepository deliveryBoyRepository;
+	// -----------------------------------------------------------------------------------------------------------------
+    // Repository
+    // -----------------------------------------------------------------------------------------------------------------
 
+    @Autowired
+    private DeliveryBoyRepository deliveryBoyRepository;
+    
+    // -----------------------------------------------------------------------------------------------------------------
+    // Service
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Autowired
+    private DeliveryRouteService deliveryRouteService;
+
+    /**
+     * NearestDeliveryBoys
+     * 
+     * @param latitude
+     * @param longitude
+     * @param radius
+     * @return List<DeliveryBoy>
+     */
     public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius) {
         return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius);
     }
 
+    /**
+     * getNearestDeliveryBoy
+     * 
+     * @param latitude
+     * @param longitude
+     * @return DeliveryBoy
+     */
     public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude) {
 
         DeliveryBoy deliveryBoy = null;
@@ -46,5 +73,17 @@ public class DeliveryBoyService {
         }
 
     }
+
+    /**
+     * Close Router
+     * 
+     * @param hash
+     * @return Boolean
+     */
+	public Boolean getCloseRouter(String hash) {
+		DeliveryRoute deliveryRoute = deliveryRouteService.getDeliveryRoute(hash);
+		deliveryRoute.closeDeliveryRoute();
+		return true;
+	}
 
 }

@@ -1,0 +1,97 @@
+
+{
+"endingLongitude" : "-51.228496",
+"endingLatitude"  : "-30.03742831",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":1
+}
+{
+"endingLongitude" : "-51.136677", 
+"endingLatitude" :	"-30.07824631",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":3
+}
+{
+"endingLongitude" : "-51.18467499", 
+"endingLatitude" :	"-30.09396132",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":4
+}
+{
+"endingLongitude" : "-51.18663487", 
+"endingLatitude" :	"-30.06447218",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":5
+}
+{
+"endingLongitude" : "-51.217361", 
+"endingLatitude" :	"-30.05994085",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":6
+}
+{
+"endingLongitude" : "-51.18160481", 
+"endingLatitude" :	"-30.07361846",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":7
+}
+{
+"endingLongitude" : "-51.17686927", 
+"endingLatitude" :	"-30.06730583",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":8
+}
+{
+"endingLongitude" : "-51.18289546", 
+"endingLatitude" :	"-30.07997904",
+"deliveryItems":[  
+  {  
+     "quantity":1,
+     "productId":838
+  }
+],
+"storeHash":"fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51",
+"customerId":9
+}

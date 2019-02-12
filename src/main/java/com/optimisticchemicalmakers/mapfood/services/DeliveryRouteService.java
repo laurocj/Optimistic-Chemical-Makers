@@ -14,18 +14,33 @@ import com.optimisticchemicalmakers.mapfood.repositories.DeliveryRouterRepositor
 @Service
 public class DeliveryRouteService {
 	
+	// -----------------------------------------------------------------------------------------------------------------
+    // Repository
+    // -----------------------------------------------------------------------------------------------------------------
+
 	@Autowired
 	public DeliveryRouterRepository deliveryRouterRepository;
 	
+	// -----------------------------------------------------------------------------------------------------------------
+    // Services
+    // -----------------------------------------------------------------------------------------------------------------
+
 	@Autowired
 	public StoreService storeService;
 
 	@Autowired
 	public DeliveryBoyService deliveryBoyService;
 	
+	// -----------------------------------------------------------------------------------------------------------------
+    // Bean
+    // -----------------------------------------------------------------------------------------------------------------
+	
 	@Resource(name = "getWaitingOrders")
 	WaitingOrders waitingOrders;
 	
+	// -----------------------------------------------------------------------------------------------------------------
+    // Method - getCloseRouter
+    // -----------------------------------------------------------------------------------------------------------------
 	public DeliveryRoute addOrder(DeliveryOrder newDeliveryOrder) {
 		
 		Map<Date, DeliveryRoute> map = waitingOrders.getMap();
@@ -84,16 +99,21 @@ public class DeliveryRouteService {
         return deliveryRoute;
 	}
 
-	// Get Optimized Delivery Route
-	public List<Geolocation> getOptimizedDeliveryRoute(DeliveryRoute deliveryRoute) {
+	/**
+	 * getOptimizedDeliveryRoute
+	 * 
+	 * @param deliveryRoute
+	 * @return DeliveryRoute
+	 */
+	public DeliveryRoute getOptimizedDeliveryRoute(DeliveryRoute deliveryRoute) {
 
 		DeliveryOrder nextDeliveryOrder = null;
 
 		List<DeliveryOrder> deliveryOrders = new ArrayList<>(deliveryRoute.getDeliveryOrders());
 
-		List<Geolocation> optimizedRoute = new ArrayList<>();
+		List<DeliveryOrder> optimizedRoute = new ArrayList<>();
 
-		optimizedRoute.add(deliveryRoute.getStore());
+//		optimizedRoute.add(deliveryRoute.getStore());
 
 		while (deliveryOrders.size() > 0) {
 
@@ -117,6 +137,8 @@ public class DeliveryRouteService {
 
 			}
 
+			nextDeliveryOrder.setClassificationOnDelivery(optimizedRoute.size());
+			
 			optimizedRoute.add(nextDeliveryOrder);
 
 			deliveryOrders.remove(nextDeliveryOrder);
@@ -124,35 +146,75 @@ public class DeliveryRouteService {
 			nextDeliveryOrder = null;
 
 		}
+		
+		deliveryRoute.setDeliveryOrders(optimizedRoute);
 
-		return optimizedRoute;
+		return deliveryRoute;
 
 	}
 
+	/**
+	 * getCloseRouter
+	 * 
+	 * @param hash_store
+	 * @return List<DeliveryRoute>
+	 */
 	public List<DeliveryRoute> getDeliveryRouteByStore(String hash_store) {
 		Store store = storeService.getStore(hash_store);
 		return deliveryRouterRepository.findByStore(store);
 	}
 
+	/**
+	 * getDeliveryRoute
+	 * 
+	 * @param deliveryOrder
+	 * @return DeliveryRoute
+	 */
 	public DeliveryRoute getDeliveryRoute(DeliveryOrder deliveryOrder) {
-		return this.getDeliveryRoute(deliveryOrder.getId());
+		return deliveryRouterRepository.findByDeliveryOrders(Arrays.asList(deliveryOrder));
 	}
 
+	/**
+	 * getDeliveryRoute
+	 * 
+	 * @param id
+	 * @return DeliveryRoute 
+	 */
 	public DeliveryRoute getDeliveryRoute(Long id) {
 		return deliveryRouterRepository.findById(id).get();
 	}
 
+	/**
+	 * assignDeliveryBoy
+	 * 
+	 * @param deliverRoute
+	 * @param deliveryBoy
+	 * @return DeliveryRoute
+	 */
 	public DeliveryRoute assignDeliveryBoy(DeliveryRoute deliverRoute, DeliveryBoy deliveryBoy) {
 		deliverRoute.setDeliveryBoy(deliveryBoy);
 		return deliveryRouterRepository.save(deliverRoute);
 	}
 
+	/**
+	 * assignDeliveryBoy
+	 * 
+	 * @param deliveryRoute
+	 * @return DeliveryRoute
+	 */
 	public DeliveryRoute assignDeliveryBoy(DeliveryRoute deliveryRoute) {
 		return this.assignDeliveryBoy(deliveryRoute, deliveryBoyService.getNearestDeliveryBoy(
 				deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude()));
 	}
-
-
-
+	
+	/**
+	 * getDeliveryRoute
+	 * 
+	 * @param hash
+	 * @return DeliveryRoute
+	 */
+	public DeliveryRoute getDeliveryRoute(String hash) {
+		return deliveryRouterRepository.findByHash(hash);
+	}
 
 }

@@ -11,6 +11,8 @@ public class DeliveryItemDto {
     private Long deliveryOrderId;
 
     private Integer quantity;
+    
+    private String productDescription;
 
     // Constructor
 
@@ -31,6 +33,14 @@ public class DeliveryItemDto {
 
 	public Integer getQuantity() {
 		return quantity;
+	}
+
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
 
 	public void setId(Long id) {

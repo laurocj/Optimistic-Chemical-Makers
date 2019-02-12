@@ -44,8 +44,10 @@ public class DeliveryItemFactory {
         deliveryItemDto.setQuantity(deliveryItem.getQuantity());
 
         deliveryItemDto.setProductId(deliveryItem.getProduct().getId());
+        
+        deliveryItemDto.setProductDescription(deliveryItem.getProduct().getDescription());
 
-        deliveryItemDto.setDeliveryOrderId(deliveryItem.getProduct().getId());
+        deliveryItemDto.setDeliveryOrderId(deliveryItem.getDeliveryOrder().getId());
 
         return deliveryItemDto;
 

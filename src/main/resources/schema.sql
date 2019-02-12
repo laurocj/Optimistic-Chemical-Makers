@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `delivery_order` (
   `latitude` varchar(45) DEFAULT NULL,
   `longitude` varchar(45) DEFAULT NULL,
   `delivery_route_id` int(11) DEFAULT NULL,
+  `classification_on_delivery` INT(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -1,6 +1,7 @@
 package com.optimisticchemicalmakers.mapfood.services;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TrafficModel;
 import com.google.maps.model.TravelMode;
+import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
+import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
 
 @Service
 public class RouteService {
@@ -21,11 +24,25 @@ public class RouteService {
 	
 	public RouteService() {}
 	
+	public DirectionsResult getBestRoute(DeliveryRoute deliveryRoute){
+		
+    	List<LatLng> points = new ArrayList<>();
+    	for (DeliveryOrder deliveryOrder : deliveryRoute.getDeliveryOrders()) {
+    		LatLng point = new LatLng();
+    		point.lat = deliveryOrder.getLatitude();
+    		point.lng = deliveryOrder.getLongitude();
+    		points.add(point);
+		}
+    	
+    	LatLng origen = new LatLng(deliveryRoute.getStore().getLatitude(),deliveryRoute.getStore().getLongitude());
+    	
+    	return this.getBestRoute(origen, points);
+    }
+	
 	public DirectionsResult getBestRoute(LatLng startPoint, List<LatLng> waypoints) {
-
+		
         LatLng destination = waypoints.get(waypoints.size() - 1);
         waypoints.remove(destination);
-
 
         try {
             DirectionsResult directionsResult =  DirectionsApi.newRequest(apiContext)
