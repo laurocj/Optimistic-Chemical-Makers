@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import com.google.maps.model.DirectionsResult;
 import com.optimisticchemicalmakers.mapfood.dtos.DeliveryOrderDto;
 import com.optimisticchemicalmakers.mapfood.factories.DeliveryOrderFactory;
+import com.optimisticchemicalmakers.mapfood.models.DeliveryBoy;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryRoute;
 import com.optimisticchemicalmakers.mapfood.models.Store;
@@ -35,6 +36,9 @@ public class DeliveryOrderService {
     
     @Autowired
     private DeliveryRouteService deliveryRouteService;
+    
+    @Autowired
+    private DeliveryBoyService deliveryBoyService;
 
     @Autowired
     private RouteService googleService;
@@ -56,14 +60,19 @@ public class DeliveryOrderService {
         
     	Long estimatedPreparationTime = 600000L; // 10 min
     	Long kmTimeTraveled = 120000L; // 2 min
-    	
+    
     	DeliveryOrder newDeliveryOrder = deliveryOrderFactory.getInstance(deliveryOrderDto);
-
+    	
     	Store store = storeService.getStore(deliveryOrderDto.getStoreHash());
     	newDeliveryOrder.setStore(store);
 
     	Double distance = store.distanceTo(newDeliveryOrder.getLatitude(), newDeliveryOrder.getLongitude());
     	
+    	DeliveryBoy deliveryBoy = deliveryBoyService.getNearestDeliveryBoy(newDeliveryOrder.getLatitude(), newDeliveryOrder.getLongitude());
+		
+    	if(deliveryBoy != null)
+			distance = distance + newDeliveryOrder.distanceTo(deliveryBoy.getLatitude(), deliveryBoy.getLongitude()); 
+    			
     	newDeliveryOrder.start();
     	
     	Date estimatedTime = new Date();
