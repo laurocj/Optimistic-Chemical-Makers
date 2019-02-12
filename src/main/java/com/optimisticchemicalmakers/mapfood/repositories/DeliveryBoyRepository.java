@@ -35,19 +35,9 @@ public interface DeliveryBoyRepository extends CrudRepository<DeliveryBoy, Long>
 
     @Query(value="SELECT db.*, "+HAVERSINE_PART_BOY+" AS distance "
     		+ "FROM delivery_boy db "
-    		+ "JOIN delivery_route dr ON db.id = dr.delivery_boy "
-    		+ "JOIN delivery_order do ON do.delivery_route_id = dr.id "
-    		+ "JOIN delivery_item di ON di.delivery_order_id = do.id "
-    		+ "GROUP BY dr.delivery_boy "
-    		+ "HAVING COUNT(di.product_id) <= :itens AND distance <= :radius "
-    		+ "ORDER BY distance LIMIT 3 ",nativeQuery = true)
-    List<DeliveryBoy> getNearestDeliveryBoys(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius, @Param("itens") int itens);
-
-    @Query(value="SELECT db.*, "+HAVERSINE_PART_BOY+" AS distance "
-    		+ "FROM delivery_boy db "
+    		+ "WHERE db.id NOT IN ( SELECT dr.delivery_boy FROM delivery_route dr) "
     		+ "HAVING distance <= :radius "
     		+ "ORDER BY distance LIMIT 3 ",nativeQuery = true)
-	List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius);
-
+    List<DeliveryBoy> getNearestDeliveryBoysFree(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius);
     
 }

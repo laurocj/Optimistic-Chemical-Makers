@@ -213,7 +213,7 @@ public class DeliveryRouteService {
 		DeliveryOrder latestDelivery = deliveryRoute.getDeliveryOrders().get(quantIems - 1);
 		
 		return this.assignDeliveryBoy(deliveryRoute, 
-							deliveryBoyService.getNearestDeliveryBoy(
+							deliveryBoyService.getNearestDeliveryBoyBoysFreeByStartPosition(
 								deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude(),
 								maxItems,
 								latestDelivery.getLatitude(),latestDelivery.getLongitude()

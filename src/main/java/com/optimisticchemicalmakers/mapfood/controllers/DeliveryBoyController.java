@@ -32,7 +32,7 @@ public class DeliveryBoyController {
             @RequestParam("longitude") Double longitude,
             @RequestParam("radius") Double radius) {
 
-        return deliveryBoyService.getNearestDeliveryBoys(latitude, longitude, radius);
+        return deliveryBoyService.getNearestDeliveryBoysFree(latitude, longitude, radius);
 
     }
 
