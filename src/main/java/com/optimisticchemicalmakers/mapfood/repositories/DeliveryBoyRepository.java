@@ -11,9 +11,26 @@ import java.util.List;
 @Repository
 public interface DeliveryBoyRepository extends CrudRepository<DeliveryBoy, Long> {
 
-    String HAVERSINE_PART = "(6371 * acos(cos(radians(:latitude)) * cos(radians(d.latitude)) * cos(radians(d.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(d.latitude))))";
+	static final String HAVERSINE_PART = "(6371 * acos(cos(radians(:latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(latitude))))";
 
-    @Query(value="SELECT d.*, "+HAVERSINE_PART+" AS distance FROM delivery_boy d HAVING distance <= :radius order by distance",nativeQuery = true)
-    List<DeliveryBoy> getNearestDeliveryBoys(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius);
+    @Query(value="SELECT db.*, "+HAVERSINE_PART+" AS distance "
+    		+ "FROM delivery_boy db "
+    		+ "WHERE db.id NOT IN  ( "
+    		+ "		SELECT dr.delivery_boy FROM delivery_route dr "
+    		+ "		JOIN delivery_order do ON do.delivery_route_id = dr.id "
+    		+ "		JOIN delivery_item di ON di.delivery_order_id = do.id "
+    		+ "		WHERE dr.delivery_boy IS NOT NULL "
+    		+ "		GROUP BY dr.delivery_boy"
+    		+ "		HAVING COUNT(di.product_id) >= :notitens) "
+    		+ "HAVING distance <= :radius "
+    		+ "ORDER BY distance LIMIT 1 ",nativeQuery = true)
+    List<DeliveryBoy> getNearestDeliveryBoys(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("radius") Double radius, @Param("notitens") int notitens);
 
+    @Query(value="SELECT db.*, "+HAVERSINE_PART+" AS distance "
+    		+ "FROM delivery_boy db "
+    		+ "HAVING distance <= :radius "
+    		+ "ORDER BY distance LIMIT 1 ",nativeQuery = true)
+	List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius);
+
+    
 }

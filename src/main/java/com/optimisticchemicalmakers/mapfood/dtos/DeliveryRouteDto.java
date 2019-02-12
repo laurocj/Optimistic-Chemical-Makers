@@ -9,7 +9,7 @@ public class DeliveryRouteDto {
 
 	private String storeHash;
     
-    private DeliveryBoyDto deliveryBoy;
+    private Long deliveryBoy;
 
     private Date closedAt;
 
@@ -21,7 +21,7 @@ public class DeliveryRouteDto {
 		return storeHash;
 	}
 
-	public DeliveryBoyDto getDeliveryBoy() {
+	public Long getDeliveryBoy() {
 		return deliveryBoy;
 	}
 
@@ -37,8 +37,8 @@ public class DeliveryRouteDto {
 		this.storeHash = storeHash;
 	}
 
-	public void setDeliveryBoy(DeliveryBoyDto deliveryBoy) {
-		this.deliveryBoy = deliveryBoy;
+	public void setDeliveryBoy(Long deliveryBoyId) {
+		this.deliveryBoy = deliveryBoyId;
 	}
 
 	public void setClosedAt(Date closedAt) {

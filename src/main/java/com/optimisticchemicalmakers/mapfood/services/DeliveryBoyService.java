@@ -33,8 +33,31 @@ public class DeliveryBoyService {
      * @param radius
      * @return List<DeliveryBoy>
      */
+    public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius,int doesNotContainXIitems) {
+        return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius, doesNotContainXIitems);
+    }
+    
+    /**
+     * NearestDeliveryBoys
+     * 
+     * @param latitude
+     * @param longitude
+     * @param radius
+     * @return List<DeliveryBoy>
+     */
     public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius) {
         return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius);
+    }
+    
+    /**
+     * getNearestDeliveryBoy
+     * 
+     * @param latitude
+     * @param longitude
+     * @return DeliveryBoy
+     */
+    public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude) {
+    	return this.getNearestDeliveryBoy(latitude, longitude);
     }
 
     /**
@@ -44,10 +67,9 @@ public class DeliveryBoyService {
      * @param longitude
      * @return DeliveryBoy
      */
-    public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude) {
+    public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude, int doesNotContainXIitems) {
 
         DeliveryBoy deliveryBoy = null;
-
 
         Double radius = 1.0;
 
@@ -55,8 +77,8 @@ public class DeliveryBoyService {
 
             radius++;
 
-            List<DeliveryBoy> deliveryBoys = this.getNearestDeliveryBoys(latitude, longitude, radius);
-
+            List<DeliveryBoy> deliveryBoys = this.getNearestDeliveryBoys(latitude, longitude, radius, doesNotContainXIitems);
+            
             if (deliveryBoys.size() != 0) deliveryBoy = deliveryBoys.get(0);
 
             if (radius >= 10) break;

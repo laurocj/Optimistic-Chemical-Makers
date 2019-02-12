@@ -2,6 +2,7 @@ package com.optimisticchemicalmakers.mapfood.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,7 @@ public class DeliveryOrderController {
     // POST /v1/order/ready
     // Sinaliza que uma ordem foi finalizada
     // -----------------------------------------------------------------------------------------------------------------
+    @CrossOrigin(origins = "http://localhost:4200") // temporary for testing in APP angular
     @PostMapping(value = "/order/ready")
     public ResponseEntity<DeliveryRouteDto> signDeliveryOrderReadyToDeliveryBoy(
             @RequestBody DeliveryOrderDto deliveryOrderDto) {

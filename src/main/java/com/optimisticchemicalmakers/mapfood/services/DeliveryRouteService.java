@@ -203,8 +203,13 @@ public class DeliveryRouteService {
 	 * @return DeliveryRoute
 	 */
 	public DeliveryRoute assignDeliveryBoy(DeliveryRoute deliveryRoute) {
+		
+		int quantItemsMax = 5;
+		
+		int doesNotContainXIitems = deliveryRoute.getDeliveryOrders().size() - quantItemsMax;
+		
 		return this.assignDeliveryBoy(deliveryRoute, deliveryBoyService.getNearestDeliveryBoy(
-				deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude()));
+				deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude(),doesNotContainXIitems));
 	}
 	
 	/**
