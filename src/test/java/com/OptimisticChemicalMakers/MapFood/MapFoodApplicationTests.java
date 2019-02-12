@@ -88,6 +88,17 @@ public class MapFoodApplicationTests {
 	               .andExpect(status().isOk());
 	}
 	
+	@Test
+	public void reportTeste() throws Exception {
+		
+		mvc.perform(get("/v1/order/filter?store=fac09173cbb9fc57e9c4b59859f18813433bf0e06d95279daf7d18750e034d51&start=2019-02-11&end=2019-02-12")
+	               .accept(MediaType.APPLICATION_JSON))
+	               .andExpect(status().isOk())
+	               .andExpect(jsonPath("$", notNullValue()));
+	}
+	
+	
+	
 
 }
 

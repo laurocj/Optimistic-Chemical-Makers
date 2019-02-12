@@ -1,5 +1,7 @@
 package com.optimisticchemicalmakers.mapfood.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -152,6 +154,30 @@ public class DeliveryOrderService {
     public DeliveryOrder getDeliveryOrder(DeliveryOrderDto deliveryOrderDto) {
         return this.getDeliveryOrder(deliveryOrderDto.getId());
     }
+
+    
+
+	public List<DeliveryOrder> getDeliveryOrdersByStoreAndDate(String storeHash, Date start, Date end) {
+		Store store = storeService.getStore(storeHash);
+		return deliveryOrderRepository.findByStoreAndCreatedAtBetween(store,start,end);
+	}
+
+
+	public List<DeliveryOrder> getDeliveryOrdersByStoreAndDate(String storeHash, String start, String end) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date startDate = null;
+		Date endDate = null;
+		try {
+			startDate = format.parse(start);
+			endDate = format.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return this.getDeliveryOrdersByStoreAndDate(storeHash, startDate, endDate);
+	}
 
 
 }
