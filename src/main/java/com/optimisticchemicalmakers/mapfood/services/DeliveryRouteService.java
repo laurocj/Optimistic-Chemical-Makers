@@ -206,10 +206,19 @@ public class DeliveryRouteService {
 		
 		int quantItemsMax = 5;
 		
-		int doesNotContainXIitems = deliveryRoute.getDeliveryOrders().size() - quantItemsMax;
+		int quantIems = deliveryRoute.getDeliveryOrders().size();
 		
-		return this.assignDeliveryBoy(deliveryRoute, deliveryBoyService.getNearestDeliveryBoy(
-				deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude(),doesNotContainXIitems));
+		int maxItems = quantIems - quantItemsMax;
+		
+		DeliveryOrder latestDelivery = deliveryRoute.getDeliveryOrders().get(quantIems - 1);
+		
+		return this.assignDeliveryBoy(deliveryRoute, 
+							deliveryBoyService.getNearestDeliveryBoy(
+								deliveryRoute.getStore().getLatitude(), deliveryRoute.getStore().getLongitude(),
+								maxItems,
+								latestDelivery.getLatitude(),latestDelivery.getLongitude()
+							)
+					);
 	}
 	
 	/**

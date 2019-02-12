@@ -33,8 +33,8 @@ public class DeliveryBoyService {
      * @param radius
      * @return List<DeliveryBoy>
      */
-    public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius,int doesNotContainXIitems) {
-        return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius, doesNotContainXIitems);
+    public List<DeliveryBoy> getNearestDeliveryBoys(Double latitude, Double longitude, Double radius,int maxItems) {
+        return deliveryBoyRepository.getNearestDeliveryBoys(latitude, longitude, radius, maxItems);
     }
     
     /**
@@ -67,7 +67,7 @@ public class DeliveryBoyService {
      * @param longitude
      * @return DeliveryBoy
      */
-    public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude, int doesNotContainXIitems) {
+    public DeliveryBoy getNearestDeliveryBoy(Double latitude, Double longitude, int maxItems, Double andLatitude, Double andLongitude) {
 
         DeliveryBoy deliveryBoy = null;
 
@@ -76,8 +76,11 @@ public class DeliveryBoyService {
         while (deliveryBoy == null) {
 
             radius++;
-
-            List<DeliveryBoy> deliveryBoys = this.getNearestDeliveryBoys(latitude, longitude, radius, doesNotContainXIitems);
+            
+            List<DeliveryBoy> deliveryBoys = deliveryBoyRepository.getNearestDeliveryBoysOnTheWay(latitude, longitude, radius, maxItems, andLatitude, andLongitude);
+            
+            if(deliveryBoys.isEmpty())
+            	deliveryBoys = this.getNearestDeliveryBoys(latitude, longitude, radius, maxItems);
             
             if (deliveryBoys.size() != 0) deliveryBoy = deliveryBoys.get(0);
 
