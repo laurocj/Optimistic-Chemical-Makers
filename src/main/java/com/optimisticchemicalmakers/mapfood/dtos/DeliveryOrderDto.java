@@ -15,6 +15,8 @@ public class DeliveryOrderDto {
     
     private Long customerId;
     
+    private Double distance;
+    
     private Date estimatedDevliveryTime;
 
     private Set<DeliveryItemDto> deliveryItems;
@@ -49,6 +51,14 @@ public class DeliveryOrderDto {
 
 	public Set<DeliveryItemDto> getDeliveryItems() {
 		return deliveryItems;
+	}
+	
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
 	}
 
 	public void setId(Long id) {

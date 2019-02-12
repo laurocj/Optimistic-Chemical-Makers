@@ -12,6 +12,7 @@ import com.optimisticchemicalmakers.mapfood.dtos.DeliveryOrderDto;
 import com.optimisticchemicalmakers.mapfood.dtos.DeliveryRouteDto;
 import com.optimisticchemicalmakers.mapfood.factories.DeliveryOrderFactory;
 import com.optimisticchemicalmakers.mapfood.factories.DeliveryRouteFactory;
+import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
 import com.optimisticchemicalmakers.mapfood.services.DeliveryOrderService;
 
 @RestController
@@ -40,12 +41,10 @@ public class DeliveryOrderController {
     // Creia uma ordem
     // -----------------------------------------------------------------------------------------------------------------
     @PostMapping(value = "/order/create")
-    public ResponseEntity<?> createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrder) {
+    public ResponseEntity<?> createDeliveryOrder(@RequestBody DeliveryOrderDto deliveryOrderDto) {
+    	DeliveryOrder deliveryOrder = deliveryOrderService.createDeliveryOrder(deliveryOrderDto);
         return ResponseEntity.ok(
-        		deliveryOrderFactory
-        		.getInstance(deliveryOrderService
-        					.createDeliveryOrder(deliveryOrder)
-        					)
+        		deliveryOrderFactory.getInstance(deliveryOrder,deliveryOrder.getStore())
         		);
     }
 

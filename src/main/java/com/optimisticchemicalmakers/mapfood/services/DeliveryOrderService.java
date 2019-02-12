@@ -68,8 +68,8 @@ public class DeliveryOrderService {
     	
     	Date estimatedTime = new Date();
     	estimatedTime.setTime((long) (newDeliveryOrder.getCreatedAt().getTime() + (distance * kmTimeTraveled) + estimatedPreparationTime));
+
     	newDeliveryOrder.setEstimatedDeliveryTime(estimatedTime);
-    	deliveryOrderDto.setEstimatedDevliveryTime(estimatedTime);
 
     	newDeliveryOrder = deliveryOrderRepository.save(newDeliveryOrder);
 

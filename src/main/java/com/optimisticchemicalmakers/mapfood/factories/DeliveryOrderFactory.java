@@ -12,6 +12,7 @@ import com.optimisticchemicalmakers.mapfood.dtos.DeliveryOrderDto;
 import com.optimisticchemicalmakers.mapfood.models.Customer;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryItem;
 import com.optimisticchemicalmakers.mapfood.models.DeliveryOrder;
+import com.optimisticchemicalmakers.mapfood.models.Store;
 
 @Component
 public class DeliveryOrderFactory {
@@ -22,36 +23,34 @@ public class DeliveryOrderFactory {
     public DeliveryOrder getInstance(DeliveryOrderDto deliveryOrderDto) {
 
         DeliveryOrder deliveryOrder = new DeliveryOrder();
-
         deliveryOrder.setLatitude(deliveryOrderDto.getEndingLatitude());
         deliveryOrder.setLongitude(deliveryOrderDto.getEndingLongitude());
-
+        deliveryOrder.setCustomer(new Customer(deliveryOrderDto.getCustomerId()));
+        
         Set<DeliveryItem> deliveryItems = StreamSupport.stream(deliveryOrderDto.getDeliveryItems().spliterator(), false)
                 .map(deliveryItemFactory::getInstance)
                 .collect(Collectors.toSet());
-
-        deliveryOrder.setCustomer(new Customer(deliveryOrderDto.getCustomerId()));
         
         deliveryItems.forEach(deliveryItem -> deliveryItem.setDeliveryOrder(deliveryOrder));
-
         deliveryOrder.setDeliveryItems(deliveryItems);
-
         return deliveryOrder;
 
     }
-
+    
+    public DeliveryOrderDto getInstance(DeliveryOrder deliveryOrder, Store store) {
+    	DeliveryOrderDto deliveryOrderDto = this.getInstance(deliveryOrder);
+    	deliveryOrderDto.setDistance(deliveryOrder.distanceTo(store));
+        return deliveryOrderDto;
+    }
+    
     public DeliveryOrderDto getInstance(DeliveryOrder deliveryOrder) {
 
         DeliveryOrderDto deliveryOrderDto = new DeliveryOrderDto();
-
         deliveryOrderDto.setId(deliveryOrder.getId());
-
         deliveryOrderDto.setStoreHash(deliveryOrder.getStore().getHash());
-
+        deliveryOrderDto.setEstimatedDevliveryTime(deliveryOrder.getEstimatedDeliveryTime());
         deliveryOrderDto.setCustomerId(deliveryOrder.getCustomer().getId());
-        
         deliveryOrderDto.setEndingLatitude(deliveryOrder.getLatitude());
-
         deliveryOrderDto.setEndingLongitude(deliveryOrder.getLongitude());
 
         Set<DeliveryItemDto> deliveryItems = StreamSupport.stream(deliveryOrder.getDeliveryItems().spliterator(), false)
